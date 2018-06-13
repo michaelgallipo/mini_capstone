@@ -1,5 +1,18 @@
 require 'unirest'
 
+  response = Unirest.post(
+    "http://localhost:3000/users",
+    parameters: {
+      name: "Minerva McGonagall",
+      email: "mmcgonagall@hogwarts.edu",
+      password: "gryffindor rules",
+      password_confirmation: "gryffindor rules"
+    }
+  )
+  p response.body
+
+
+
 
 # puts "Enter Product name"
 # name = gets.chomp
@@ -37,9 +50,9 @@ require 'unirest'
 
 # puts JSON.pretty_generate(response)
 
-puts "Enter the ID of the product you would like to delete"
-product_id = gets.chomp
+# puts "Enter the ID of the product you would like to delete"
+# product_id = gets.chomp
 
-response = Unirest.delete("http://localhost:3000/api/products/#{product_id}")
+# response = Unirest.delete("http://localhost:3000/api/products/#{product_id}")
 
-puts response
+# puts response
