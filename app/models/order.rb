@@ -26,5 +26,9 @@ def product_name
   product.name
 end
 
+def friendly_order_date
+    created_at.strftime("%b %d, %Y")
+end
+
 
 end
