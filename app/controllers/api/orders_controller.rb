@@ -12,15 +12,18 @@ class Api::OrdersController < ApplicationController
       product_id: params[:product_id],
       quantity: params[:quantity],
       )
-
-    order_id = @order.id
       
-   subtotal = @order.product[:price] * @order[:quantity]
-    @order.subtotal = subtotal
-    @order.tax = subtotal * 0.09
-    @order.total = subtotal * 1.09
+   # subtotal = @order.product[:price] * @order[:quantity]
+   #  @order.subtotal = subtotal
+   #  @order.tax = subtotal * 0.09
+   #  @order.total = subtotal * 1.09
 
-    @order.save
+
+  @order.subtotal = @order.calc_subtotal
+  @order.tax = @order.calc_tax
+  @order.total = @order.calc_total
+
+  @order.save
 
     render "show.json.jbuilder"
   end
