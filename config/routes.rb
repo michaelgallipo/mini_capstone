@@ -11,7 +11,10 @@ Rails.application.routes.draw do
     delete "/products/:id" => "products#destroy"
 
     get "/orders/:id" => "orders#show"
-    post "orders" => "orders#create"
+    post "/orders" => "orders#create"
+
+    get "/images/:id" => "images#show"
+    post "/images" => "images#create"
 
   end
 
