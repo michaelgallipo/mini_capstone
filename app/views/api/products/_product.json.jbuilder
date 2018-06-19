@@ -1,6 +1,5 @@
   json.id product.id
   json.name product.name
-  json.category product.category
   json.price product.price
   json.description product.description
   json.color product.color
@@ -17,4 +16,6 @@ end
     json.total_price product.total_price
     json.sales_message product.sales_message
   end
+
+  json.categories product.categories
   

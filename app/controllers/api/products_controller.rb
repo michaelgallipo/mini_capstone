@@ -25,7 +25,6 @@ class Api::ProductsController < ApplicationController
   def create
     @product = Product.create(
       name: params[:name],
-      category: params[:category],
       price: params[:price],
       description: params[:description],
       color: params[:color],
@@ -39,7 +38,6 @@ class Api::ProductsController < ApplicationController
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
       @product.name = params[:name] || @product.name
-      @product.category = params[:category] || @product.category
       @product.price = params[:price] || @product.price
       @product.description = params[:description] || @product.description
       @product.color = params[:color] || @product.color
