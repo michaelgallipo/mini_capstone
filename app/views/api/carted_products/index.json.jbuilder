@@ -5,4 +5,8 @@ json.array! @carted_products.each do |carted_product|
   json.quantity carted_product.quantity
   json.status carted_product.status
   json.order_id carted_product.order_id
+
+  json.product do
+  json.partial! carted_product.product, partial: "api/products/product", as: :product
+  end
 end

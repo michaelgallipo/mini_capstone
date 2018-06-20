@@ -2,14 +2,14 @@ class Api::CartedProductsController < ApplicationController
 
   def index
 
-    #if current_user
-      @carted_products = CartedProduct.where('status = ?', 'carted')
+    if current_user 
+      @carted_products = current_user.carted_products.where('status = ?', 'carted')
 
       render 'index.json.jbuilder'
       
-    # else
-    #   render json: ["fail"]
-    # end
+    else
+      render json: ["fail"]
+    end
   end
 
   def show
