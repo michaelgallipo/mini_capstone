@@ -12,3 +12,7 @@ json.invoice do
   json.total number_to_currency(@order.total)
   json.order_date @order.friendly_order_date
 end
+
+json.carted_products do
+  json.array! @order.carted_products, partial: "api/carted_products/carted_product", as: :carted_product
+end
