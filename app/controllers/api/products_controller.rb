@@ -31,7 +31,13 @@ class Api::ProductsController < ApplicationController
       availability: params[:availability],
       supplier_id: params[:supplier_id]
       )
-    render "show.json.jbuilder"
+
+    if @product.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
+
   end
 
   def update
@@ -44,8 +50,12 @@ class Api::ProductsController < ApplicationController
       @product.availability = params[:availability] || @product.availability
       @product_supplier_id = params[:supplier_id] || @product.supplier_id
 
-      @product.save 
-    render "show.json.jbuilder"
+    if @product.save 
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
+    
   end
 
   def destroy

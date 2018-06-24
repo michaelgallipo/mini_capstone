@@ -9,6 +9,12 @@ class Product < ApplicationRecord
   has_many :product_categories
   has_many :categories, through: :product_categories
 
+  validates :price, :name, :description, presence: true
+  validates :price, numericality: true
+  validates :name, length: {minimum: 5}
+  validates :price, length: {in: 2..6}
+
+
   def is_discounted?
     price <100
   end

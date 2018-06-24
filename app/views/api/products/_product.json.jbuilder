@@ -5,6 +5,7 @@
   json.color product.color
   json.availability product.availability
   json.images product.images
+  json.supplier_id product.supplier_id
 
 json.supplier do
   json.partial! product.supplier, partial: "api/suppliers/supplier", as: :supplier
