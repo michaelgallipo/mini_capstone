@@ -1,5 +1,7 @@
 class Api::ProductsController < ApplicationController
 
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @products = Product.all
 
@@ -23,46 +25,58 @@ class Api::ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create(
-      name: params[:name],
-      price: params[:price],
-      description: params[:description],
-      color: params[:color],
-      availability: params[:availability],
-      supplier_id: params[:supplier_id]
-      )
+    if current_user && current_user.admin
+      @product = Product.create(
+        name: params[:name],
+        price: params[:price],
+        description: params[:description],
+        color: params[:color],
+        availability: params[:availability],
+        supplier_id: params[:supplier_id]
+        )
 
-    if @product.save
-      render "show.json.jbuilder"
+      if @product.save
+        render "show.json.jbuilder"
+      else
+        render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+      end
     else
-      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+      render json: {}, status: :unauthorized
     end
-
   end
 
   def update
-    product_id = params[:id]
-    @product = Product.find_by(id: product_id)
-      @product.name = params[:name] || @product.name
-      @product.price = params[:price] || @product.price
-      @product.description = params[:description] || @product.description
-      @product.color = params[:color] || @product.color
-      @product.availability = params[:availability] || @product.availability
-      @product_supplier_id = params[:supplier_id] || @product.supplier_id
+    if current_user && current_user.admin
+      product_id = params[:id]
+      @product = Product.find_by(id: product_id)
+        @product.name = params[:name] || @product.name
+        @product.price = params[:price] || @product.price
+        @product.description = params[:description] || @product.description
+        @product.color = params[:color] || @product.color
+        @product.availability = params[:availability] || @product.availability
+        @product_supplier_id = params[:supplier_id] || @product.supplier_id
 
-    if @product.save 
-      render "show.json.jbuilder"
+      if @product.save 
+        render "show.json.jbuilder"
+      else
+        render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+      end
     else
-      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+      render json: {}, status: :unauthorized
     end
-    
+
   end
 
   def destroy
-    product_id = params[:id]
-    @product = Product.find_by(id: product_id)
-    @product.destroy
-    render json: {message: "Product successfully deleted"}
+    if current_user && current_user.admin
+      product_id = params[:id]
+      @product = Product.find_by(id: product_id)
+      @product.destroy
+      render json: {message: "Product successfully deleted"}
+    else
+      render json: {}, status: :unauthorized
+    end
+
   end
 
 

@@ -1,5 +1,7 @@
 class Api::CartedProductsController < ApplicationController
 
+  before_action :authenticate_user
+
   def index
 
     if current_user 
@@ -28,11 +30,11 @@ class Api::CartedProductsController < ApplicationController
     render "show.json.jbuilder"
   end
 
-def destroy
-  @carted_product = CartedProduct.find(params[:id])
-  @carted_product.update(status: "removed")
-  render json: {message: "Carted Product removed"}
-end
+  def destroy
+    @carted_product = CartedProduct.find(params[:id])
+    @carted_product.update(status: "removed")
+    render json: {message: "Carted Product removed"}
+  end
 
 
 end
