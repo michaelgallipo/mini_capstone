@@ -34,6 +34,25 @@ Product.create!([
   {name: "Test Stick II", price: "100.0", description: "Test stick", color: "Black", image_url: nil, availability: true, supplier_id: 5},
   {name: "Test Stick III", price: "65.0", description: "Test Stick", color: "Red", image_url: nil, availability: true, supplier_id: 1}
 ])
+Order.create!([
+  {user_id: 4, subtotal: 118.0, tax: 5.9, total: 123.9},
+  {user_id: 4, subtotal: nil, tax: nil, total: nil},
+  {user_id: 4, subtotal: nil, tax: nil, total: nil},
+  {user_id: 4, subtotal: nil, tax: nil, total: nil},
+  {user_id: 5, subtotal: nil, tax: nil, total: nil},
+  {user_id: 5, subtotal: 258.0, tax: 23.22, total: 281.22},
+  {user_id: 5, subtotal: 796.0, tax: 71.64, total: 867.64},
+  {user_id: 7, subtotal: nil, tax: nil, total: nil},
+  {user_id: 7, subtotal: nil, tax: nil, total: nil},
+  {user_id: 7, subtotal: nil, tax: nil, total: nil},
+  {user_id: 6, subtotal: 398.0, tax: 35.82, total: 433.82},
+  {user_id: 6, subtotal: 417.0, tax: 37.53, total: 454.53},
+  {user_id: 6, subtotal: nil, tax: nil, total: nil},
+  {user_id: 2, subtotal: 518.0, tax: 46.62, total: 564.62},
+  {user_id: 4, subtotal: 198.0, tax: 17.82, total: 215.82},
+  {user_id: 2, subtotal: 717.0, tax: 64.53, total: 781.53},
+  {user_id: 6, subtotal: 474.0, tax: 42.66, total: 516.66}
+])
 CartedProduct.create!([
   {user_id: 3, product_id: 2, quantity: 2, status: "carted", order_id: nil},
   {user_id: 3, product_id: 4, quantity: 3, status: "carted", order_id: nil},
@@ -58,25 +77,7 @@ Image.create!([
   {url: "https://bsbproduction.s3.amazonaws.com/portals/5297/images/lacrosse.jpg", product_id: 16},
   {url: "https://bsbproduction.s3.amazonaws.com/portals/5297/images/lacrosse.jpg", product_id: 17}
 ])
-Order.create!([
-  {user_id: 4, subtotal: 118.0, tax: 5.9, total: 123.9},
-  {user_id: 4, subtotal: nil, tax: nil, total: nil},
-  {user_id: 4, subtotal: nil, tax: nil, total: nil},
-  {user_id: 4, subtotal: nil, tax: nil, total: nil},
-  {user_id: 5, subtotal: nil, tax: nil, total: nil},
-  {user_id: 5, subtotal: 258.0, tax: 23.22, total: 281.22},
-  {user_id: 5, subtotal: 796.0, tax: 71.64, total: 867.64},
-  {user_id: 7, subtotal: nil, tax: nil, total: nil},
-  {user_id: 7, subtotal: nil, tax: nil, total: nil},
-  {user_id: 7, subtotal: nil, tax: nil, total: nil},
-  {user_id: 6, subtotal: 398.0, tax: 35.82, total: 433.82},
-  {user_id: 6, subtotal: 417.0, tax: 37.53, total: 454.53},
-  {user_id: 6, subtotal: nil, tax: nil, total: nil},
-  {user_id: 2, subtotal: 518.0, tax: 46.62, total: 564.62},
-  {user_id: 4, subtotal: 198.0, tax: 17.82, total: 215.82},
-  {user_id: 2, subtotal: 717.0, tax: 64.53, total: 781.53},
-  {user_id: 6, subtotal: 474.0, tax: 42.66, total: 516.66}
-])
+
 
 ProductCategory.create!([
   {product_id: 2, category_id: 3},
