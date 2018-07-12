@@ -1,0 +1,84 @@
+Index.html info
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+  
+  <div id="container" >
+
+    <h1>Equipment Index Page</h1>
+    <br>
+
+    <div class="row" >
+
+
+
+    </div>
+
+  </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="index.js" defer></script>
+</body>
+</html>
+
+
+
+<template id="product-card">
+
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiP4nQs1z0soJynUXmAloJ1rYM1uRyMPN5JNK9a-44f_BgSLZqoQ" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Generic Stick</h5>
+      <p class="price card-text">Price: 79.99 </p>
+      <p class="description card-text">Description: Generic Stick</p>
+      <p class="color card-text">Color: Black </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="category list-group-item">Stick</li>
+    </ul>
+    <div class="card-body">
+      <a href="" class="card-link">View Product</a>
+    </div>
+  </div>
+
+</template>
+
+
+index.js info
+
+var productTemplate = document.querySelector('#product-card');
+var productRow = document.querySelector(".row");
+
+/* global sxios */
+axios.get("http://localhost:3000/api/products").then(function(response) {
+  var products = response.data;
+  console.log(products);
+
+
+  products.forEach(function(product) {
+    var productClone = productTemplate.content.cloneNode(true);
+    productClone.querySelector(".card-img-top").src = product.images[0].url;
+    productClone.querySelector(".card-title").innerText = product.name;
+    productClone.querySelector(".price").innerText = `Price: ${ product.price }`;
+    productClone.querySelector(".description").innerText = product.description;
+    productClone.querySelector(".color").innerText = `Color: ${product.color}`;
+    product.categories.forEach(function(category) {
+      productClone.querySelector(".category").innerText = category.name;      
+    })
+
+    productRow.appendChild(productClone);
+  });
+
+})
