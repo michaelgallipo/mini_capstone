@@ -5,7 +5,8 @@ var HomePage = {
   data: function() {
     return {
       message: "Lacrosse Equipment Emporium",
-      products: []
+      products: [],
+      currentProduct: {}
     };
   },
   created: function() {
@@ -14,9 +15,33 @@ var HomePage = {
       console.log(this.products);
     }.bind(this));
   },
+  methods: {
+    setCurrentProduct: function(product) { 
+      this.currentProduct = product;
+      console.log(this.currentProduct);
+      }
+    },
+  computed: {},
+};
+
+var ProductShowPage = {
+  template: "#product-show-page",
+  data: function() {
+    return {
+      message: "Lacrosse Equipment Emporium",
+      product: {}
+    };
+  },
+  created: function() {
+    axios.get("/api/products/" + this.$route.params.id ).then(function(response) {
+      this.product = response.data;
+      console.log(this.product);
+    }.bind(this));
+  },
   methods: {},
   computed: {}
 };
+
 
 var SamplePage = {
   template: "#sample-page",
@@ -99,6 +124,53 @@ var ProductNewPage = {
     }
   }
 };
+var ProductEditPage = {
+  template: "#product-edit-page",
+  data: function() {
+    return {  
+        name: "",
+        price: "",
+        description: "",
+        color: "",
+        availability: "",
+        supplier_id: "",
+        errors: []
+    };
+  },
+  created: function() {
+    axios.get("/api/products/" + this.$route.params.id ).then(function(response) {
+      this.name = response.data.name;
+      this.price = response.data.price;
+      this.description = response.data.description;
+      this.color = response.data.color;
+      this.availability = response.data.availability;
+      this.supplier_id = response.data.supplier_id;
+    }.bind(this));
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        name: this.name,
+        price: this.price,
+        description: this.description,
+        color: this.color,
+        availability: this.availability,
+        supplier_id: this.supplier_id
+      };
+      axios
+        .patch("/api/products/" +this.$route.params.id, params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+  },
+}
+
+};
 
 
 var LoginPage = {
@@ -151,7 +223,10 @@ var router = new VueRouter({
   { path: "/signup", component: SignupPage },
   { path: "/login", component: LoginPage },
   { path: "/logout", component: LogoutPage },
-  { path: "/products/new", component: ProductNewPage}],
+  { path: "/products/new", component: ProductNewPage},
+  { path: "/products/:id", component: ProductShowPage},
+  { path: "/products/:id/edit", component: ProductEditPage}, 
+  ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
   }
