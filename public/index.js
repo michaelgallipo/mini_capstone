@@ -6,7 +6,10 @@ var HomePage = {
     return {
       message: "Lacrosse Equipment Emporium",
       products: [],
-      currentProduct: {}
+      currentProduct: {},
+      productSearch: "",
+      categorySearch: "",
+      sortAscending: true
     };
   },
   created: function() {
@@ -19,9 +22,33 @@ var HomePage = {
     setCurrentProduct: function(product) { 
       this.currentProduct = product;
       console.log(this.currentProduct);
-      }
+      },
+    validProduct: function(product) {
+      return product.name.toLowerCase().includes(this.productSearch.toLowerCase());
+      },
+    cheapProduct: function(product) {
+        return product.price < 100;
+      },
+    sortedPrice: function() {
+      return this.products.sort(function(product1, product2) {
+        return product1.price - product2.price
+      })
+    }     
     },
-  computed: {},
+  computed: {
+     sortedProducts: function() {
+      return this.products.sort(function(product1, product2) {
+        var lowerProductName1 = product1.name.toLowerCase();
+        var lowerProductName2 = product2.name.toLowerCase();
+        if (this.sortAscending) {
+          return lowerProductName1.localeCompare(lowerProductName2);
+        } else { 
+          return lowerProductName2.localeCompare(lowerProductName1);
+        }
+        this.SortAscending = !this.sortAscending;
+        }.bind(this))
+    }   
+  },
 };
 
 var ProductShowPage = {

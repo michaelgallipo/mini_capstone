@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>My App</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css">
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
@@ -59,9 +60,22 @@
 
     <h1>{{ message }}</h1>
 
+  <div>
+    Search by Product: <input v-model="productSearch" list="productNames">
+  </div>
 
-  <div class="row">
-    <div v-for="product in products" class="card col-4" >
+    <div>
+      <button v-on:click="sortedPrice">Sort by product price</button>     <button  v-on:click="sortedProducts" >Sort by product name</button>
+    </div>
+
+  <datalist id="productNames"><option v-for="product in products">{{product.name}}</option>
+  </datalist>
+
+
+
+
+  <div is="transition-group" name="slide-right" class="row">
+    <div v-for="product in products" v-bind:key="product.id" class="card col-4" v-if="validProduct(product)">
       <img class="card-img-top" :src="product.images[0].url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{product.name}}</h5>
@@ -79,7 +93,10 @@
       See more information
       </button>
     </div>
+
   </div>
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
